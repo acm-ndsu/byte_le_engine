@@ -1,26 +1,30 @@
-from enum import Enum
+from enum import Enum, auto
 
 
 class DebugLevel(Enum):
-    NONE = 0
-    CLIENT = 1
-    CONTROLLER = 2
-    ENGINE = 3
+    NONE = auto()
+    CLIENT = auto()
+    CONTROLLER = auto()
+    ENGINE = auto()
 
 
 class ObjectType(Enum):
-    NONE = 4
-    ACTION = 5
-    PLAYER = 6
+    NONE = auto()
+    ACTION = auto()
+    PLAYER = auto()
+    GAMEBOARD = auto()
+    TILE = auto()
+    ITEM = auto()
 
 
 class ActionType(Enum):
-    MOVE_UP = 7
-    MOVE_DOWN = 8
-    MOVE_LEFT = 9
-    MOVE_RIGHT = 10
-    INTERACT_UP = 11
-    INTERACT_DOWN = 12
-    INTERACT_LEFT = 13
-    INTERACT_RIGHT = 14
-    INTERACT_CENTER = 15
+    NONE = auto()
+    MOVE_UP = auto()
+    MOVE_DOWN = auto()
+    MOVE_LEFT = auto()
+    MOVE_RIGHT = auto()
+    INTERACT_UP = auto()
+    INTERACT_DOWN = auto()
+    INTERACT_LEFT = auto()
+    INTERACT_RIGHT = auto()
+    INTERACT_CENTER = auto()
