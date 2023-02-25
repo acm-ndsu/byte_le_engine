@@ -1,12 +1,17 @@
 from copy import deepcopy
 
 from game.common.action import Action
+from game.common.avatar import Avatar
 from game.common.enums import *
 from game.common.player import Player
+from game.common.stats import GameStats
 import game.config as config
 from game.utils.thread import CommunicationThread
-
+from game.controllers.movement_controller import MovementController
 from game.controllers.controller import Controller
+from game.controllers.interact_controller import InteractController
+
+
 
 
 class MasterController(Controller):
