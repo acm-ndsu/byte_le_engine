@@ -1,4 +1,5 @@
 from copy import deepcopy
+import random
 
 from game.common.action import Action
 from game.common.avatar import Avatar
@@ -12,19 +13,22 @@ from game.controllers.controller import Controller
 from game.controllers.interact_controller import InteractController
 
 
-
-
 class MasterController(Controller):
     def __init__(self):
         super().__init__()
         self.game_over = False
-
+        self.event_timer = GameStats.event_timer
+        self.event_times = (0, 0)
         self.turn = None
         self.current_world_data = None
+        self.movement_controller = MovementController()
+        self.interact_controller = InteractController()
 
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, clients):
-        pass
+        starting_positions = [[3, 3], [3, 9]]
+        for index, client in enumerate (clients):
+            client.avatar = Avatar(position=starting_positions[index])
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
     # the state of the world, returns the key that will give the appropriate world information
@@ -41,28 +45,43 @@ class MasterController(Controller):
     # Receives world data from the generated game log and is responsible for interpreting it
     def interpret_current_turn_data(self, clients, world, turn):
         self.current_world_data = world
+        if turn == 1:
+            random.seed(world["seed"])
+            self.event_times = random.randrange(162, 172), random.randrange(329, 339)
 
     # Receive a specific client and send them what they get per turn. Also obfuscates necessary objects.
     def client_turn_arguments(self, client, turn):
-        actions = Action()
-        client.action = actions
+        turn_action = Action()
+        client.action = turn_action
 
         # Create deep copies of all objects sent to the player
+        current_world = deepcopy(self.current_world_data["game_map"])
+        copy_avatar = deepcopy(client.avatar)
         # Obfuscate data in objects that that player should not be able to see
-
-        args = (self.turn, actions, self.current_world_data)
+        # Currently world data isn't obfuscated at all
+        args = (self.turn, turn_action, self.current_world_data)
         return args
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
-        pass
+        for client in clients:
+            self.movement_controller.handle_actions(self.current_world_data["game_map"], client)
+            self.interact_controller.handle_actions(client, self.current_world_data["game_map"])
+        # checks event logic at the end of round
+        self.handle_events(clients)
+
+    def handle_events(self, clients):
+        # If it is time to run an event, master controller picks an event to run
+        if self.turn == self.event_times[0] or self.turn == self.event_times[1]:
+            self.current_world_data["game_map"].generate_event(EventType.example, EventType.example)
 
     # Return serialized version of game
     def create_turn_log(self, clients, turn):
         data = dict()
-
+        data['tick'] = turn
+        data['clients'] = [client.to_json() for client in clients]
         # Add things that should be thrown into the turn logs here
-        data['temp'] = None
+        data['game_map'] = self.current_world_data["game_map"].to_json()
 
         return data
 
