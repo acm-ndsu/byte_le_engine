@@ -27,7 +27,7 @@ class MasterController(Controller):
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, clients):
         starting_positions = [[3, 3], [3, 9]]
-        for index, client in enumerate (clients):
+        for index, client in enumerate(clients):
             client.avatar = Avatar(position=starting_positions[index])
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
