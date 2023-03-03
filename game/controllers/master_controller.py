@@ -73,7 +73,7 @@ class MasterController(Controller):
     def handle_events(self, clients):
         # If it is time to run an event, master controller picks an event to run
         if self.turn == self.event_times[0] or self.turn == self.event_times[1]:
-            self.current_world_data["game_map"].generate_event(EventType.example, EventType.example)
+            self.current_world_data["game_map"].generate_event(EventType.example, EventType.example) #eventtype.example is just a placeholder for now
 
     # Return serialized version of game
     def create_turn_log(self, clients, turn):
