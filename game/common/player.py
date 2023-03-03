@@ -5,16 +5,15 @@ from game.common.enums import *
 
 
 class Player(GameObject):
-    def __init__(self, code=None, team_name=None, action=None, avatar=None):
+    def __init__(self, code: object = None, team_name: str = None, action: Action = None, avatar: Avatar = None):
         super().__init__()
-        self.object_type = ObjectType.PLAYER
-
-        self.functional = True
-        self.error = None
-        self.team_name = team_name
-        self.code = code
-        self.action = action
-        self.avatar = avatar
+        self.object_type: ObjectType = ObjectType.PLAYER
+        self.functional: bool = True
+        self.error: object = None
+        self.team_name: str = team_name
+        self.code: object = code
+        self.action: Action = action
+        self.avatar: Avatar = avatar
 
     @property
     def action(self) -> Action:  # Will need to change Avatar class to the enum eventually
