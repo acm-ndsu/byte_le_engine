@@ -4,7 +4,7 @@ from game.config import Debug
 
 class UserClient:
     def __init__(self):
-        self.debug_level = DebugLevel.client
+        self.debug_level = DebugLevel.CLIENT
         self.debug = True
 
     def print(self, *args):
