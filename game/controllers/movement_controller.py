@@ -1,33 +1,43 @@
-from game.controllers.controller import Controller
 from game.common.player import Player
 from game.common.map.game_board import GameBoard
 from game.common.map.tile import Tile
 from game.common.enums import *
+from game.utils.vector import Vector
+from game.controllers.controller import Controller
 
 
 class MovementController(Controller):
+    """
+    The Movement Controller manages the movement actions the player tries to execute. Players can move up, down,
+    left, and right. If the player tries to move into a space that's impassable, they don't move.
+
+    For example, if the player attempts to move into an Occupiable Station (something the player can be on) that is
+    occupied by a Wall object (something the player can't be on), the player doesn't move. That is, if the player
+    tries to move into anything that can't be occupied by something, they won't move.
+    """
 
     def __init__(self):
         super().__init__()
 
-    def handle_actions(self, client: Player, world: GameBoard):
-        avatar_x: int = client.avatar.position[0]
-        avatar_y: int = client.avatar.position[1]
-        pos_mod: tuple[int,int] = (0,0)
-        match client.action:
+    def handle_actions(self, action: ActionType, client: Player, world: GameBoard):
+        avatar_pos: Vector = Vector(client.avatar.position.x, client.avatar.position.y)
+
+        pos_mod: Vector
+        match action:
             case ActionType.MOVE_UP:
-                pos_mod = (0, -1)
+                pos_mod = Vector(x=0, y=-1)
             case ActionType.MOVE_DOWN:
-                pos_mod = (0, 1)
+                pos_mod = Vector(x=0, y=1)
             case ActionType.MOVE_LEFT:
-                pos_mod = (-1, 0)
+                pos_mod = Vector(x=-1, y=0)
             case ActionType.MOVE_RIGHT:
-                pos_mod = (1, 0)
+                pos_mod = Vector(x=1, y=0)
             case _:  # default case
                 return
 
+        temp_vec: Vector = Vector.add_vectors(avatar_pos, pos_mod)
         # if tile is occupied return
-        temp: Tile = world.game_map[avatar_y + pos_mod[1]][avatar_x + pos_mod[0]]
+        temp: Tile = world.game_map[temp_vec.y][temp_vec.x]
         while hasattr(temp.occupied_by, 'occupied_by'):
             temp: Tile = temp.occupied_by
             
@@ -37,9 +47,9 @@ class MovementController(Controller):
         temp.occupied_by = client.avatar
         
         # while the object that occupies tile has the occupied by attribute, escalate check for avatar
-        temp: Tile = world.game_map[avatar_y][avatar_x]
+        temp: Tile = world.game_map[avatar_pos.y][avatar_pos.x]
         while hasattr(temp.occupied_by, 'occupied_by'):
             temp = temp.occupied_by
 
         temp.occupied_by = None
-        client.avatar.position = (avatar_x + pos_mod[0], avatar_y + pos_mod[1])
+        client.avatar.position = Vector(temp_vec.x, temp_vec.y)

@@ -1,6 +1,13 @@
 from enum import Enum, auto
 
 
+"""
+The use of the enum structure is to make is easier to execute certain tasks. It also helps with identifying 
+types of Objects throughout the project. 
+
+When developing the game, add any extra enums as necessary.
+"""
+
 class DebugLevel(Enum):
     NONE = auto()
     CLIENT = auto()
@@ -18,8 +25,12 @@ class ObjectType(Enum):
     TILE = auto()
     WALL = auto()
     ITEM = auto()
+    OCCUPIABLE = auto()
     STATION = auto()
     OCCUPIABLE_STATION = auto()
+    STATION_EXAMPLE = auto()
+    STATION_RECEIVER_EXAMPLE = auto()
+    OCCUPIABLE_STATION_EXAMPLE = auto()
 
 
 class ActionType(Enum):
@@ -33,3 +44,17 @@ class ActionType(Enum):
     INTERACT_LEFT = auto()
     INTERACT_RIGHT = auto()
     INTERACT_CENTER = auto()
+    SELECT_SLOT_0 = auto()
+    SELECT_SLOT_1 = auto()
+    SELECT_SLOT_2 = auto()
+    SELECT_SLOT_3 = auto()
+    SELECT_SLOT_4 = auto()
+    SELECT_SLOT_5 = auto()
+    SELECT_SLOT_6 = auto()
+    SELECT_SLOT_7 = auto()
+    SELECT_SLOT_8 = auto()
+    SELECT_SLOT_9 = auto()
+    """
+    These last 10 enums are for selecting a slot from the Avatar class' inventory.
+    You can add/remove these as needed for the purposes of your game. 
+    """
