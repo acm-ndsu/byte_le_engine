@@ -1,8 +1,7 @@
-# from game.common.action import Action
+from game.common.action import Action
 from game.common.game_object import GameObject
 from game.common.avatar import Avatar
 from game.common.enums import *
-from game.client.user_client import UserClient
 
 
 class Player(GameObject):
@@ -18,17 +17,17 @@ class Player(GameObject):
         self.functional: bool = True
         # self.error: object | None = None  # error is not used
         self.team_name: str | None = team_name
-        self.code: UserClient | None = code
+        self.code: object = code
         # self.action: Action = action
         self.actions: list[ActionType] = actions
         self.avatar: Avatar | None = avatar
 
     @property
-    def actions(self) -> list[ActionType]:  # change to Action if you want to use the action object
+    def actions(self) -> list[ActionType] | list:  # change to Action if you want to use the action object
         return self.__actions
 
     @actions.setter
-    def actions(self, actions: list[ActionType]) -> None:  # showing it returns nothing(like void in java)
+    def actions(self, actions: list[ActionType] | list) -> None:  # showing it returns nothing(like void in java)
         # if it's (not none = and) if its (none = or)
         # going across all action types and making it a boolean, if any are true this will be true\/
         if actions is None or not isinstance(actions, list) \
@@ -59,18 +58,18 @@ class Player(GameObject):
         self.__team_name = team_name
 
     @property
-    def avatar(self) -> Avatar | None:
+    def avatar(self) -> Avatar:
         return self.__avatar
 
     @avatar.setter
-    def avatar(self, avatar: Avatar | None) -> None:
+    def avatar(self, avatar: Avatar) -> None:
         if avatar is not None and not isinstance(avatar, Avatar):
             raise ValueError(f'{self.__class__.__name__}.avatar must be Avatar or None')
         self.__avatar = avatar
 
     @property
     def object_type(self) -> ObjectType:
-        return self.object_type
+        return self.__object_type
 
     @object_type.setter
     def object_type(self, object_type: ObjectType) -> None:
@@ -84,7 +83,7 @@ class Player(GameObject):
         data['functional'] = self.functional
         # data['error'] = self.error  # .to_json() if self.error is not None else None
         data['team_name'] = self.team_name
-        data['actions'] = self.actions
+        data['actions'] = [act.value for act in self.actions]
         data['avatar'] = self.avatar.to_json() if self.avatar is not None else None
 
         return data
@@ -92,12 +91,12 @@ class Player(GameObject):
     def from_json(self, data):
         super().from_json(data)
 
-        self.functional: bool = data['functional']
+        self.functional = data['functional']
         # self.error = data['error']  # .from_json(data['action']) if data['action'] is not None else None
-        self.team_name: str | None = data['team_name']
+        self.team_name = data['team_name']
 
-        self.actions: list[ActionType] = data['actions']
-        avatar: dict | None = data['avatar']
+        self.actions: list[ActionType] = [ObjectType(action) for action in data['actions']]
+        avatar: Avatar | None = data['avatar']
         if avatar is None:
             self.avatar = None
             return self
@@ -111,7 +110,7 @@ class Player(GameObject):
         #         raise Exception(f'Could not parse action: {self.action}')
 
         # match case for avatar
-        match avatar['object_type']:
+        match ObjectType(avatar['object_type']):
             case ObjectType.AVATAR:
                 self.avatar = Avatar().from_json(data['avatar'])
             case None:
@@ -127,7 +126,6 @@ class Player(GameObject):
             Team name: {self.team_name}
             Actions: 
             """
-        # This concatenates every action from the list of actions to the string
-        p += ', '.join(map(lambda action: action.name, self.actions))
-
+        # This concatenates every action from the list of actions to the string 
+        [p:= p + action for action in self.actions]
         return p
