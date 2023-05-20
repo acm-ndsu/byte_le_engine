@@ -7,23 +7,35 @@ class Config:
     __SCALE: int = 2
     __SCREEN_SIZE: Vector = Vector(x=1366, y=768)  # width, height
     __FRAME_RATE: int = 4
+    __BACKGROUND_COLOR: (int, int, int) = 0, 0, 0
 
+    # if you have an animation, this will be the number of frames the animation goes through for each turn
     @property
     def NUMBER_OF_FRAMES_PER_TURN(self) -> int:
         return self.__NUMBER_OF_FRAMES_PER_TURN
 
+    # this will be the size of the tile-its going to be squares
     @property
     def TILE_SIZE(self) -> int:
         return self.__TILE_SIZE
 
+    # scale is for the tile size being scaled larger,
+    # for ex: if you have a 16x16 tile, we can scale it to 4 so it looks larger
     @property
     def SCALE(self) -> int:
         return self.__SCALE
 
+    # the screen size is the overall screen size
     @property
     def SCREEN_SIZE(self) -> Vector:
         return self.__SCREEN_SIZE
 
+    # frame rate is the overall frame rate
     @property
     def FRAME_RATE(self) -> int:
         return self.__FRAME_RATE
+
+    # this is where you can set the default background color
+    @property
+    def BACKGROUND_COLOR(self) -> (int, int, int):
+        return self.__BACKGROUND_COLOR
