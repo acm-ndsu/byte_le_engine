@@ -2,44 +2,58 @@ import pygame, sys
 from Visualiser2.config import Config
 from game.utils.vector import Vector
 
-pygame.init()
 
-config = Config()
+class ByteVisualiser:
 
-size: Vector = config.SCREEN_SIZE
-# size = width, height = 1366, 768
-tile_size: int = config.TILE_SIZE
-black = 0, 0, 0
+    def __init__(self):
+        pygame.init()
+        self.config = Config()
+        self.turn_logs: list[dict]
+        self.size: Vector = self.config.SCREEN_SIZE
+        # size = width, height = 1366, 768
+        self.tile_size: int = self.config.TILE_SIZE
+        self.black = 0, 0, 0
 
-screen = pygame.display.set_mode((size.x, size.y))
+        self.screen = pygame.display.set_mode((self.size.x, self.size.y))
 
-clock = pygame.time.Clock()
-simple_font = pygame.font.Font(None, 50)
+        self.clock = pygame.time.Clock()
+        self.simple_font = pygame.font.Font(None, 50)
 
-tick: int = 0
+        self.tick: int = 0
 
-turn_logs: list[dict]
+    def load(self):
+        self.screen.fill(self.black)
 
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT: sys.exit()
+    def prerender(self):
+        if self.tick % self.config.NUMBER_OF_FRAMES_PER_TURN == 0:
+            # NEXT TURN
+            pass
+        else:
+            # NEXT ANIMATION FRAME
+            pass
+        self.tick += 1
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE: sys.exit()
+    def render(self):
+        pygame.display.flip()
 
-    # DO ACTIONS
-    screen.fill(black)
+    def postrender(self):
+        self.clock.tick(self.config.FRAME_RATE)
 
-    if(tick % config.NUMBER_OF_FRAMES_PER_TURN == 0):
-        # NEXT TURN
-        pass
-    else:
-        # NEXT ANIMATION FRAME
-        pass
+    def loop(self):
+        self.load()
+        while True:
+            # pygame events used to exit the loop
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT: sys.exit()
 
-    tick += 1
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE: sys.exit()
+
+            self.prerender()
+            self.render()
+            self.postrender()
 
 
-    # Render Frame
-    pygame.display.flip()
-    clock.tick(config.FRAME_RATE)
+if __name__ == '__main__':
+    byte_visualiser: ByteVisualiser = ByteVisualiser()
+    byte_visualiser.loop()
