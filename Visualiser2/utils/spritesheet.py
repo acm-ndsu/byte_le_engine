@@ -2,7 +2,6 @@ import pygame
 
 
 class SpriteSheet:
-
     def __init__(self, filename):
         """Load the sheet."""
         try:
@@ -24,7 +23,7 @@ class SpriteSheet:
         return image
 
     def images_at(self, rects, colorkey=None):
-        """Load a whole bunch of images and return them as a list."""
+        """Load a bunch of images and return them as a list."""
         return [self.image_at(rect, colorkey) for rect in rects]
 
     def load_strip(self, rect, image_count, colorkey=None):
