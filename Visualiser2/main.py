@@ -1,6 +1,10 @@
+import json
 import pygame, sys
 from Visualiser2.config import Config
+from Visualiser2.bytesprite import ByteSprite
 from game.utils.vector import Vector
+from Visualiser2.utils.log_reader import logs_to_dict
+from pathlib import Path
 
 
 class ByteVisualiser:
@@ -8,7 +12,7 @@ class ByteVisualiser:
     def __init__(self):
         pygame.init()
         self.config = Config()
-        self.turn_logs: list[dict]
+        self.turn_logs: dict[str:dict] = {}
         self.size: Vector = self.config.SCREEN_SIZE
         # size = width, height = 1366, 768
         self.tile_size: int = self.config.TILE_SIZE
@@ -21,11 +25,12 @@ class ByteVisualiser:
         self.tick: int = 0
 
     def load(self):
-        pass
+        self.turn_logs = logs_to_dict()
 
     def prerender(self):
         self.screen.fill(self.config.BACKGROUND_COLOR)
         if self.tick % self.config.NUMBER_OF_FRAMES_PER_TURN == 0:
+            # TODO: Make Connections to Adapter class to Trigger Methods to Populate Frame lists
             # NEXT TURN
             pass
         else:
@@ -48,6 +53,7 @@ class ByteVisualiser:
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE: sys.exit()
+                # TODO: Add event method to adapter
 
             self.prerender()
             self.render()
