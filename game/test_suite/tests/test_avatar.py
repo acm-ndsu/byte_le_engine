@@ -11,12 +11,12 @@ class TestAvatar(unittest.TestCase):
     """
 
     def setUp(self) -> None:
-        self.avatar: Avatar = Avatar(None, None, [], 1)
+        self.avatar: Avatar = Avatar(None, 1)
         self.item: Item = Item(10, 100, 1, 1)
 
     # test set item
     def test_avatar_set_item(self):
-        self.avatar.held_item = self.item
+        self.avatar.pick_up(self.item)
         self.assertEqual(self.avatar.held_item, self.item)
 
     def test_avatar_set_item_fail(self):
@@ -39,41 +39,28 @@ class TestAvatar(unittest.TestCase):
         self.avatar.position = Vector(10, 10)
         self.assertEqual(str(self.avatar.position), str(Vector(10, 10)))
 
+    def test_avatar_set_position_None(self):
+        self.avatar.position = None
+        self.assertEqual(self.avatar.position, None)
+
     def test_avatar_set_position_fail(self):
         with self.assertRaises(ValueError) as e:
             self.avatar.position = 10
         self.assertEqual(str(e.exception), 'Avatar.position must be a Vector or None.')
 
-    # test set inventory
-    def test_avatar_set_inventory(self):
-        self.avatar.inventory = [Item(1, 1)]
-        self.assertEqual(self.avatar.inventory[0].value, Item(1, 1).value)
+    # test json method
+    def test_avatar_json_with_none_item(self):
+        # held item will be None
+        self.avatar.held_item = self.avatar.inventory[0]
+        self.avatar.position = Vector(10, 10)
+        data: dict = self.avatar.to_json()
+        avatar: Avatar = Avatar().from_json(data)
+        self.assertEqual(self.avatar.object_type, avatar.object_type)
+        self.assertEqual(self.avatar.held_item, avatar.held_item)
+        self.assertEqual(str(self.avatar.position), str(avatar.position))
 
-    # fails if inventory is not a list
-    def test_avatar_set_inventory_fail_1(self):
-        with self.assertRaises(ValueError) as e:
-            self.avatar.inventory = 'Fail'
-        self.assertEqual(str(e.exception), 'Avatar.inventory must be a list of Items.')
-
-    # fails if inventory size is less than the max_inventory_size
-    def test_avatar_set_inventory_fail_2(self):
-        with self.assertRaises(ValueError) as e:
-            self.avatar.inventory = [Item(1, 1), Item(4, 2)]
-        self.assertEqual(str(e.exception), 'Avatar.inventory size must be less than max_inventory_size')
-
-    def test_avatar_set_max_inventory_size(self):
-        self.avatar.max_inventory_size = 10
-        self.assertEqual(str(self.avatar.max_inventory_size), str(10))
-
-    def test_avatar_set_max_inventory_size_fail(self):
-        with self.assertRaises(ValueError) as e:
-            self.avatar.max_inventory_size = 'Fail'
-        self.assertEqual(str(e.exception), 'Avatar.max_inventory_size must be an int.')
-
-        # test json method
-
-    def test_avatar_json(self):
-        self.avatar.held_item = self.item
+    def test_avatar_json_with_item(self):
+        self.avatar.pick_up(Item(1, 1))
         self.avatar.position = Vector(10, 10)
         data: dict = self.avatar.to_json()
         avatar: Avatar = Avatar().from_json(data)

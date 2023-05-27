@@ -4,6 +4,7 @@ import json
 import os
 import sys
 import traceback
+import logging
 
 from game.common.map.game_board import GameBoard
 from game.common.player import Player
@@ -258,7 +259,7 @@ class Engine:
         else:
             data = self.master_controller.create_turn_log(self.clients, self.tick_number)
 
-        write_json_file(data, os.path.join(LOGS_DIR, f"turn_{self.tick_number:04d}.json"))
+        write_json_file(data, os.path.join(LOGS_DIR, f'turn_{self.tick_number:04d}.json'))
 
         # Perform a game over check
         if self.master_controller.game_over:
@@ -304,5 +305,6 @@ class Engine:
     # Debug print statement
     def debug(*args):
         if Debug.level >= DebugLevel.ENGINE:
-            print('Engine: ', end='')
-            print(*args)
+            logging.basicConfig(level=logging.DEBUG)
+            for arg in args:
+                logging.debug(f'Engine: {arg}')
