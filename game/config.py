@@ -37,6 +37,8 @@ GAME_MAP_FILE_NAME = "game_map.json"                                # Name and e
 GAME_MAP_DIR = os.path.join(os.getcwd(), "logs")                    # Location of game map file
 GAME_MAP_FILE = os.path.join(GAME_MAP_DIR, GAME_MAP_FILE_NAME)      # Filepath for game map file
 
+GAME_BOARD_MARGIN_LEFT = 200
+GAME_BOARD_MARGIN_TOP = 200
 
 class Debug:                    # Keeps track of the current debug level of the game
     level = DebugLevel.NONE
