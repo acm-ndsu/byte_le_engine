@@ -8,6 +8,8 @@ class Config:
     __SCREEN_SIZE: Vector = Vector(x=1366, y=768)  # width, height
     __FRAME_RATE: int = 4
     __BACKGROUND_COLOR: (int, int, int) = 0, 0, 0
+    __GAME_BOARD_MARGIN_LEFT = 200
+    __GAME_BOARD_MARGIN_TOP = 200
 
     # if you have an animation, this will be the number of frames the animation goes through for each turn
     @property
@@ -39,3 +41,11 @@ class Config:
     @property
     def BACKGROUND_COLOR(self) -> (int, int, int):
         return self.__BACKGROUND_COLOR
+
+    @property
+    def GAME_BOARD_MARGIN_LEFT(self) -> int:
+        return self.__GAME_BOARD_MARGIN_LEFT
+
+    @property
+    def GAME_BOARD_MARGIN_TOP(self) -> int:
+        return self.__GAME_BOARD_MARGIN_TOP
