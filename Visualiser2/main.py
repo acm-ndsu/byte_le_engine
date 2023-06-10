@@ -1,7 +1,5 @@
-import json
 import pygame, sys
 from Visualiser2.config import Config
-from Visualiser2.bytesprite import ByteSprite
 from game.utils.vector import Vector
 from Visualiser2.utils.log_reader import logs_to_dict
 from pathlib import Path
