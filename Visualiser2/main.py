@@ -1,9 +1,11 @@
-import pygame, sys
-from Visualiser2.config import Config
-from game.utils.vector import Vector
-from Visualiser2.utils.log_reader import logs_to_dict
-from pathlib import Path
+import sys
+
+import pygame
+
 from Visualiser2.adapter import Adapter
+from Visualiser2.config import Config
+from Visualiser2.utils.log_reader import logs_to_dict
+from game.utils.vector import Vector
 
 
 class ByteVisualiser:
@@ -23,24 +25,28 @@ class ByteVisualiser:
         self.simple_font = pygame.font.Font(None, 50)
 
         self.tick: int = 0
+        self.bytesprites = pygame.sprite.Group()
 
     def load(self):
         self.turn_logs = logs_to_dict()
-        self.adapter.populate_bytesprites()
+        self.bytesprites = self.adapter.populate_bytesprites()
 
     def prerender(self):
         self.screen.fill(self.config.BACKGROUND_COLOR)
-        if self.tick % self.config.NUMBER_OF_FRAMES_PER_TURN == 0:
-            # NEXT TURN
-            self.adapter.continue_animation()
-        else:
-            # NEXT ANIMATION FRAME
-            self.adapter.recalc_animation(self.turn_logs[f'turn_{self.tick // self.config.NUMBER_OF_FRAMES_PER_TURN+1:04d}'])
-        self.tick += 1
+        self.prerender()
 
     def render(self):
+        if self.tick % self.config.NUMBER_OF_FRAMES_PER_TURN == 0:
+            # NEXT TURN
+            self.adapter.recalc_animation(
+                self.turn_logs[f'turn_{self.tick // self.config.NUMBER_OF_FRAMES_PER_TURN + 1:04d}'])
+        else:
+            # NEXT ANIMATION FRAME
+            self.adapter.continue_animation()
+
         self.adapter.render()
         pygame.display.flip()
+        self.tick += 1
 
     def postrender(self):
         self.adapter.clean_up()
