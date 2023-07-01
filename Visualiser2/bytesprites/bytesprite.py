@@ -17,6 +17,7 @@ class ByteSprite(pyg.sprite.Sprite):
     __frame_index: int  # Selects the sprite from the spritesheet to be used. Used for animation
     __config: Config = Config()
 
+    # make sure that all inherited classes constructors only take screen as an parameter
     def __init__(self, screen: pyg.Surface, filename: str, num_of_states: int, colorkey: pyg.Color | None = None,
                  object_type: int = 0, layer: int = 0, top_left: Vector = Vector(0, 0)):
         # Add implementation here for selecting the sprite sheet to use
