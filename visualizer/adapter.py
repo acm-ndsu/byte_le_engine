@@ -1,5 +1,7 @@
 import pygame
-
+from visualizer.bytesprites.exampleTileBS import ExampleTileBS
+from visualizer.bytesprites.exampleWallBS import ExampleWallBS
+from visualizer.bytesprites.exampleBS import ExampleBS
 
 class Adapter:
     def __init__(self, screen):
@@ -17,7 +19,9 @@ class Adapter:
 
     def populate_bytesprites(self) -> pygame.sprite.Group:
         # Instantiate all bytesprites for each object ands add them here
-        self.populate_bytesprite.add()
+        self.populate_bytesprite.add(ExampleTileBS(self.screen))
+        self.populate_bytesprite.add(ExampleWallBS(self.screen))
+        self.populate_bytesprite.add(ExampleBS(self.screen))
         return self.populate_bytesprite.copy()
 
     def render(self): ...

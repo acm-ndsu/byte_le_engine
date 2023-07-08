@@ -300,7 +300,7 @@ class Engine:
             # Flush standard out
             sys.stdout.flush()
 
-            os._exit(0)
+            # os._exit(0)
 
     # Debug print statement
     def debug(*args):

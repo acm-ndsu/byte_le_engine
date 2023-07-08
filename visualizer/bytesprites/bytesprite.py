@@ -1,8 +1,8 @@
 import pygame
 import pygame as pyg
 
-from Visualiser2.config import Config
-from Visualiser2.utils.spritesheet import SpriteSheet
+from visualizer.config import Config
+from visualizer.utils.spritesheet import SpriteSheet
 from game.utils.vector import Vector
 
 
@@ -24,12 +24,12 @@ class ByteSprite(pyg.sprite.Sprite):
         super().__init__()
         self.spritesheet_parser: SpriteSheet = SpriteSheet(filename)
         self.spritesheets: list[list[pyg.Surface]] = [self.spritesheet_parser.load_strip(
-            pyg.Rect(0, self.__config.TILE_SIZE * row, self.__config.TILE_SIZE, self.__config.TILE_SIZE * (row + 1)),
+            pyg.Rect(0, self.__config.TILE_SIZE * row, self.__config.TILE_SIZE, self.__config.TILE_SIZE),
             self.__config.NUMBER_OF_FRAMES_PER_TURN, colorkey)
             for row in range(num_of_states)]
 
         self.spritesheets = [
-            [frame := pyg.transform.scale(frame, (self.__config.TILE_SIZE * self.__config.SCALE,) * 2) for frame in
+            [pyg.transform.scale(frame, (self.__config.TILE_SIZE * self.__config.SCALE,) * 2) for frame in
              sheet] for sheet in self.spritesheets]
 
         self.rect: pyg.Rect = pyg.Rect(top_left.as_tuple(), (self.__config.TILE_SIZE * self.__config.SCALE,) * 2)
@@ -112,7 +112,7 @@ class ByteSprite(pyg.sprite.Sprite):
 
     # Inherit this method to implement sprite logic
     def update(self, data: dict, layer: int, pos: Vector) -> None:
-        super().update()
+
         self.__frame_index = 0  # Starts the new spritesheet at the beginning
         self.rect.topleft = (
             pos.x * self.__config.TILE_SIZE * self.__config.SCALE + self.__config.GAME_BOARD_MARGIN_LEFT,
