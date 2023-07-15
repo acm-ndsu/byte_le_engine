@@ -4,12 +4,12 @@ from game.utils.vector import Vector
 class Config:
     __NUMBER_OF_FRAMES_PER_TURN: int = 4
     __TILE_SIZE: int = 16
-    __SCALE: int = 2
+    __SCALE: int = 6
     __SCREEN_SIZE: Vector = Vector(x=1366, y=768)  # width, height
-    __FRAME_RATE: int = 4
+    __FRAME_RATE: int = 12
     __BACKGROUND_COLOR: (int, int, int) = 0, 0, 0
-    __GAME_BOARD_MARGIN_LEFT = 200
-    __GAME_BOARD_MARGIN_TOP = 200
+    __GAME_BOARD_MARGIN_LEFT = 400
+    __GAME_BOARD_MARGIN_TOP = 100
 
     # if you have an animation, this will be the number of frames the animation goes through for each turn
     @property

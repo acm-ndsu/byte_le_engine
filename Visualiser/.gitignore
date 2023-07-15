@@ -1,5 +1,0 @@
-./logs/
-./graphical.json
-./*.gif
-./*.mp4
-!./*.json

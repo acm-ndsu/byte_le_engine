@@ -77,21 +77,8 @@ Changes made in 2023.
 
 
 * Avatar Class
-  * The Avatar class is newly implemented in this version of the byte-engine and includes
-  many new features.
-  * Position:
-    * The Avatar class has a parameter called "position" which is a Vector object (explained 
-    later in this document). This simply stores the Avatar's coordinate on the game map.
-  * Inventory:
-    * There is an inventory system implemented in the Avatar class now. You are able to specify 
-    the max size of it, and there are methods that are used to pick up items, take items from 
-    other objects, and drop the Avatar's held item.
-  * Held Item:
-    * The held item of an Avatar is an item that the Avatar has in their inventory. This is done 
-    by using enums. Reference the enums.py file for more information.
-  * These changes are provided to allow for development to go smoothly. Developers are not obliged 
-  to use nor keep any of these changes. The inventory system and any other aspect of the class may be 
-  modified or removed as necessary for game development.
+  * The avatar class now has new implementations for an inventory 
+  system. Documentation is provided in the class file.
 
 
 * Enums File
@@ -108,15 +95,13 @@ Changes made in 2023.
 * Avatar VS Player Classes
   * These two classes are often confused with each other. Here are their differences.
   * Avatar:
-    * The Avatar class represents the character that is in the game. The Avatar is 
-    what moves around, interacts with other GameObjects, gains points, and whatever else 
-    the developers implement.
+    * The Avatar class represents the character that's in the game. The Avatar is 
+    what moves around and interacts with other GameObjects
   * Player:
     * The Player object encapsulates the Avatar class and represents the physical 
     people competing in the competition. This is why it has parameters such as team_name.
-    It is also why the controllers take a Player object as a parameter and not an Avatar
-    object; it helps manage the information gathered for the individual competitors/teams for
-    the final results.
+    It is also why the controllers takes a Player object as a parameter and not an Avatar
+    object.
 
 
 * Controllers
