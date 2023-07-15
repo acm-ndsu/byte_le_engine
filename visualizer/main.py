@@ -7,6 +7,7 @@ from visualizer.adapter import Adapter
 from visualizer.bytesprites.bytesprite import ByteSprite
 from visualizer.config import Config
 from visualizer.utils.log_reader import logs_to_dict
+from visualizer.utils.sidebars import Sidebars
 
 
 class ByteVisualiser:
@@ -28,6 +29,7 @@ class ByteVisualiser:
         self.tick: int = 0
         self.bytesprite_templates = pygame.sprite.Group()
         self.bytesprite_map: [[[ByteSprite]]] = list()
+        self.sidebars: Sidebars = Sidebars()
 
     def load(self):
         self.turn_logs = logs_to_dict()
@@ -48,7 +50,11 @@ class ByteVisualiser:
             self.continue_animation()
             self.adapter.continue_animation()
 
-        self.adapter.render()
+        self.adapter.render(self.sidebars)
+        self.screen.blit(self.sidebars.top, self.sidebars.top_rect)
+        self.screen.blit(self.sidebars.bottom, self.sidebars.bottom_rect)
+        self.screen.blit(self.sidebars.left, self.sidebars.left_rect)
+        self.screen.blit(self.sidebars.right, self.sidebars.right_rect)
         pygame.display.flip()
         self.tick += 1
 
