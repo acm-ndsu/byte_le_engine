@@ -14,17 +14,19 @@ position: Vector(0, 0)  (representing pixels on screen, top left pixel)
 
 class Text:
     def __init__(self, screen: pygame.Surface, text: str, font_size: int, font_name: str = 'bauhaus93', color: str | int | tuple[int, int, int, Optional[int]] | list[int, int, int, Optional[int]] | pygame.Color = pygame.Color('#daa520'), position: Vector = Vector(0, 0)):
+        self.__is_init = True
         self.screen: pygame.Surface = screen  # assign screen used
-        self.text: str = text  # assign text used
         self.font_size: int = font_size  # assign font size used
         self.font_name: str = font_name  # name of font used
+        self.__font: pygame.font.Font = pygame.font.SysFont(self.font_name, self.font_size)  # get font from list of
         self.color: str | int | tuple[int, int, int, Optional[int]] | list[int, int, int, Optional[int]] | pygame.Color = color  # assign color used
         self.position: Vector = position  # assign position used
-        self.__font: pygame.font.Font = pygame.font.SysFont(self.font_name, self.font_size)  # get font from list of
+        self.text: str = text  # assign text used
         # SysFont, adjust size
         self.__text_surface: pygame.Surface = self.__font.render(self.text, True, self.color)  # render text with color
         self.__rect: pygame.Rect = self.__text_surface.get_rect()  # get rectangle used
         self.__rect.topleft: tuple[int, int] = self.position.as_tuple()  # set top left position of rect to position
+        self.__is_init = False
 
     # render text and rectangle to screen
     def render(self) -> None:
@@ -55,6 +57,10 @@ class Text:
     def position(self) -> Vector:
         return self.__position
 
+    @property
+    def rect(self) -> pygame.Rect:
+        return self.__rect
+
     # setter methods
     @screen.setter
     def screen(self, screen: pygame.Surface) -> None:
@@ -77,6 +83,7 @@ class Text:
         if font_name is None or not isinstance(font_name, str):
             raise ValueError(f'{self.__class__.__name__}.font_name must be a str.')
         self.__font_name: str = font_name
+        if self.__is_init: return
         # reevaluate text with new font
         self.__font: pygame.font.Font = pygame.font.SysFont(self.font_name, self.font_size)
         self.__text_surface: pygame.Surface = self.__font.render(self.text, True, self.color)
@@ -88,6 +95,7 @@ class Text:
         if font_size is None or not isinstance(font_size, int):
             raise ValueError(f'{self.__class__.__name__}.font_size must be an int.')
         self.__font_size: int = font_size
+        if self.__is_init: return
         # reevaluate text with new font size
         self.__font: pygame.font.Font = pygame.font.SysFont(self.font_name, self.font_size)
         self.__text_surface: pygame.Surface = self.__font.render(self.text, True, self.color)
@@ -98,6 +106,7 @@ class Text:
     def color(self, color: str | int | tuple[int, int, int, Optional[int]] | list[int, int, int, Optional[int]] | pygame.Color) -> None:
         try:
             self.__color: pygame.Color = pygame.Color(color)
+            if self.__is_init: return
             # reevaluate text with new font color
             self.__text_surface: pygame.Surface = self.__font.render(self.text, True, self.color)
             self.__rect: pygame.Rect = self.__text_surface.get_rect()
@@ -110,5 +119,6 @@ class Text:
         if position is None or not isinstance(position, Vector):
             raise ValueError(f'{self.__class__.__name__}.position must be a Vector.')
         self.__position: Vector = position
+        if self.__is_init: return
         # reevaluate text position with new position
         self.__rect.topleft: tuple[int, int] = self.position.as_tuple()
