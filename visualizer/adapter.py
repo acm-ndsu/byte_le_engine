@@ -3,12 +3,14 @@ from visualizer.bytesprites.exampleTileBS import ExampleTileBS
 from visualizer.bytesprites.exampleWallBS import ExampleWallBS
 from visualizer.bytesprites.exampleBS import ExampleBS
 from visualizer.utils.sidebars import Sidebars
+from visualizer.bytesprites.bytesprite import ByteSprite
+
 
 class Adapter:
     def __init__(self, screen):
-        self.screen = screen
-        self.bytesprites = []
-        self.populate_bytesprite = pygame.sprite.Group()
+        self.screen: pygame.Surface = screen
+        self.bytesprites: list[ByteSprite] = []
+        self.populate_bytesprite: pygame.sprite.Group = pygame.sprite.Group()
 
     def on_event(self, event): ...
 
@@ -25,7 +27,7 @@ class Adapter:
         self.populate_bytesprite.add(ExampleBS(self.screen))
         return self.populate_bytesprite.copy()
 
-    def render(self, sidebars: Sidebars):
+    def render(self, sidebars: Sidebars) -> None:
         sidebars.left.fill('#FF7F00')
         sidebars.top.fill('#7FFF00')
         sidebars.bottom.fill('#00FF7F')

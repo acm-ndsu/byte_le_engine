@@ -12,8 +12,8 @@ class Config:
     __GAME_BOARD_MARGIN_TOP: int = 100
     __SIDEBAR_TOP_DIMENSIONS: Vector = Vector(x=1300, y=100)  # width, height
     __SIDEBAR_BOTTOM_DIMENSIONS: Vector = Vector(x=1300, y=100)
-    __SIDEBAR_LEFT_DIMENSIONS: Vector = Vector(x=100, y=700)
-    __SIDEBAR_RIGHT_DIMENSIONS: Vector = Vector(x=100, y=700)
+    __SIDEBAR_LEFT_DIMENSIONS: Vector = Vector(x=100, y=800)
+    __SIDEBAR_RIGHT_DIMENSIONS: Vector = Vector(x=100, y=800)
     __SIDEBAR_TOP_PADDING: int = 5  # how much space there is around it
     __SIDEBAR_BOTTOM_PADDING: int = 5
     __SIDEBAR_LEFT_PADDING: int = 5
@@ -59,33 +59,36 @@ class Config:
         return self.__GAME_BOARD_MARGIN_TOP
 
     @property
-    def SIDEBAR_TOP_DIMENSIONS(self):
+    def SIDEBAR_TOP_DIMENSIONS(self) -> Vector:
         return self.__SIDEBAR_TOP_DIMENSIONS
 
     @property
-    def SIDEBAR_BOTTOM_DIMENSIONS(self):
+    def SIDEBAR_BOTTOM_DIMENSIONS(self) -> Vector:
         return self.__SIDEBAR_BOTTOM_DIMENSIONS
 
     @property
-    def SIDEBAR_LEFT_DIMENSIONS(self):
+    def SIDEBAR_LEFT_DIMENSIONS(self) -> Vector:
         return self.__SIDEBAR_LEFT_DIMENSIONS
 
     @property
-    def SIDEBAR_RIGHT_DIMENSIONS(self):
+    def SIDEBAR_RIGHT_DIMENSIONS(self) -> Vector:
         return self.__SIDEBAR_RIGHT_DIMENSIONS
 
     @property
-    def SIDEBAR_TOP_PADDING(self):
+    def SIDEBAR_TOP_PADDING(self) -> int:
         return self.__SIDEBAR_TOP_PADDING
 
     @property
-    def SIDEBAR_BOTTOM_PADDING(self):
+    def SIDEBAR_BOTTOM_PADDING(self) -> int:
         return self.__SIDEBAR_BOTTOM_PADDING
 
     @property
-    def SIDEBAR_LEFT_PADDING(self):
+    def SIDEBAR_LEFT_PADDING(self) -> int:
         return self.__SIDEBAR_LEFT_PADDING
 
     @property
-    def SIDEBAR_RIGHT_PADDING(self):
+    def SIDEBAR_RIGHT_PADDING(self) -> int:
         return self.__SIDEBAR_RIGHT_PADDING
+
+
+
