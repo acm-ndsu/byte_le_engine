@@ -41,5 +41,5 @@ class Tile(Occupiable):
             case ObjectType.WALL:
                 self.occupied_by: Wall = Wall().from_json(occupied_by)
             case _:
-                raise Exception(f'Could not parse occupied_by: {occupied_by}')                  
+                raise Exception(f'The object type of the object is not handled properly. The object type passed in is {occupied_by}.')
         return self
