@@ -181,12 +181,13 @@ class Avatar(GameObject):
 
         # If it's not an item, and it's not None, raise the error
         if item is not None and not isinstance(item, Item):
-            raise ValueError(f'{self.__class__.__name__}.held_item must be an Item or None.')
+            raise ValueError(
+                f'{self.__class__.__name__}.held_item must be an Item or None. It is a(n) {type(item)} and has the value of {item}')
 
         # If the item is not contained in the inventory, the error will be raised.
         if not self.inventory.__contains__(item):
             raise ValueError(f'{self.__class__.__name__}.held_item must be set to an item that already exists'
-                             f' in the inventory.')
+                             f' in the inventory. It has the value of {item}')
 
         # If the item is contained in the inventory, set the held_index to that item's index
         self.__held_index = self.inventory.index(item)
@@ -194,13 +195,15 @@ class Avatar(GameObject):
     @score.setter
     def score(self, score: int) -> None:
         if score is None or not isinstance(score, int):
-            raise ValueError(f'{self.__class__.__name__}.score must be an int.')
+            raise ValueError(
+                f'{self.__class__.__name__}.score must be an int. It is a(n) {type(score)} and has the value of {score}')
         self.__score: int = score
 
     @position.setter
     def position(self, position: Vector | None) -> None:
         if position is not None and not isinstance(position, Vector):
-            raise ValueError(f'{self.__class__.__name__}.position must be a Vector or None.')
+            raise ValueError(
+                f'{self.__class__.__name__}.position must be a Vector or None. It is a(n) {type(position)} and has the value of {position}')
         self.__position: Vector | None = position
 
     @inventory.setter
@@ -209,16 +212,17 @@ class Avatar(GameObject):
         if inventory is None or not isinstance(inventory, list) \
                 or (len(inventory) > 0 and any(map(lambda item: item is not None and not
         isinstance(item, Item), inventory))):
-            raise ValueError(f'{self.__class__.__name__}.inventory must be a list of Items.')
+            raise ValueError(
+                f'{self.__class__.__name__}.inventory must be a list of Items. It is a(n) {type(inventory)} and has the value of {inventory}')
         if len(inventory) > self.max_inventory_size:
             raise ValueError(f'{self.__class__.__name__}.inventory size must be less than or equal to '
-                             f'max_inventory_size')
+                             f'max_inventory_size. It has the value of {len(inventory)}')
         self.__inventory: list[Item] = inventory
 
     @max_inventory_size.setter
     def max_inventory_size(self, size: int) -> None:
         if size is None or not isinstance(size, int):
-            raise ValueError(f'{self.__class__.__name__}.max_inventory_size must be an int.')
+            raise ValueError(f'{self.__class__.__name__}.max_inventory_size must be an int. It is a(n) {type(size)} and has the value of {size}')
         self.__max_inventory_size: int = size
 
     # Private helper method that cleans the inventory of items that have a quantity of 0. This is a safety check
