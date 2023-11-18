@@ -94,52 +94,52 @@ class Item(GameObject):
     def durability(self, durability: int | None) -> None:
         if durability is not None and not isinstance(durability, int):
             raise ValueError(
-                f'{self.__class__.__name__}.durability must be an int. It is a(n) {type(durability)} with the value of {durability}')
+                f'{self.__class__.__name__}.durability must be an int. It is a(n) {type(durability)} with the value of {durability}.')
         if durability is not None and self.stack_size != 1:
             raise ValueError(
-                f'{self.__class__.__name__}.durability must be set to None if stack_size is not equal to 1. {self.__class__.__name__}.durability has the value of {durability}')
+                f'{self.__class__.__name__}.durability must be set to None if stack_size is not equal to 1. {self.__class__.__name__}.durability has the value of {durability}.')
         self.__durability = durability
 
     @value.setter
     def value(self, value: int) -> None:
         if value is None or not isinstance(value, int):
             raise ValueError(
-                f'{self.__class__.__name__}.value must be an int. It is a(n) {type(value)} with the value of {value}')
+                f'{self.__class__.__name__}.value must be an int. It is a(n) {type(value)} with the value of {value}.')
         self.__value: int = value
 
     @quantity.setter
     def quantity(self, quantity: int) -> None:
         if quantity is None or not isinstance(quantity, int):
             raise ValueError(
-                f'{self.__class__.__name__}.quantity must be an int. It is a(n) {type(quantity)} with the value of {quantity}')
+                f'{self.__class__.__name__}.quantity must be an int. It is a(n) {type(quantity)} with the value of {quantity}.')
         if quantity < 0:
             raise ValueError(
-                f'{self.__class__.__name__}.quantity must be greater than or equal to 0. {self.__class__.__name__}.quantity has the value of {quantity}')
+                f'{self.__class__.__name__}.quantity must be greater than or equal to 0. {self.__class__.__name__}.quantity has the value of {quantity}.')
 
         # The self.quantity is set to the lower value between stack_size and the given quantity
         # The remaining given quantity is returned if it's larger than self.quantity
         if quantity > self.stack_size:
             raise ValueError(f'{self.__class__.__name__}.quantity cannot be greater than '
-                             f'{self.__class__.__name__}.stack_size. {self.__class__.__name__}.quantity has the value of {quantity}')
+                             f'{self.__class__.__name__}.stack_size. {self.__class__.__name__}.quantity has the value of {quantity}.')
         self.__quantity: int = quantity
 
     @stack_size.setter
     def stack_size(self, stack_size: int) -> None:
         if stack_size is None or not isinstance(stack_size, int):
             raise ValueError(
-                f'{self.__class__.__name__}.stack_size must be an int. It is a(n) {type(stack_size)} with the value of {stack_size}')
+                f'{self.__class__.__name__}.stack_size must be an int. It is a(n) {type(stack_size)} with the value of {stack_size}.')
         if self.durability is not None and stack_size != 1:
             raise ValueError(f'{self.__class__.__name__}.stack_size must be 1 if {self.__class__.__name__}.durability '
-                             f'is not None. {self.__class__.__name__}.stack_size has the value of {stack_size}')
+                             f'is not None. {self.__class__.__name__}.stack_size has the value of {stack_size}.')
         if self.__quantity is not None and stack_size < self.__quantity:
             raise ValueError(
-                f'{self.__class__.__name__}.stack_size must be greater than or equal to the quantity. {self.__class__.__name__}.stack_size has the value of {stack_size}')
+                f'{self.__class__.__name__}.stack_size must be greater than or equal to the quantity. {self.__class__.__name__}.stack_size has the value of {stack_size}.')
         self.__stack_size: int = stack_size
 
     def take(self, item: Self) -> Self | None:
         if item is not None and not isinstance(item, Item):
             raise ValueError(
-                f'{item.__class__.__name__}.item must be an item. It is a(n) {type(item)} with the value of {item}')
+                f'{item.__class__.__name__}.item must be an item. It is a(n) {type(item)} with the value of {item}.')
 
         # If the item is None, just return None
         if item is None:
@@ -164,7 +164,7 @@ class Item(GameObject):
     def pick_up(self, item: Self) -> Self | None:
         if item is not None and not isinstance(item, Item):
             raise ValueError(
-                f'{item.__class__.__name__}.item must be an item. It is a(n) {type(item)} with the value of {item}')
+                f'{item.__class__.__name__}.item must be an item. It is a(n) {type(item)} with the value of {item}.')
 
         # If the item is None, just return None
         if item is None:
