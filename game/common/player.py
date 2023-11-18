@@ -16,6 +16,7 @@ class Player(GameObject):
         items, etc.). For more details on the difference between the Player and Avatar classes, refer to the README
         document.
     """
+
     def __init__(self, code: object | None = None, team_name: str | None = None, actions: list[ActionType] = [],
                  avatar: Avatar | None = None):
         super().__init__()
@@ -39,7 +40,8 @@ class Player(GameObject):
         if actions is None or not isinstance(actions, list) \
                 or (len(actions) > 0
                     and any(map(lambda action_type: not isinstance(action_type, ActionType), actions))):
-            raise ValueError(f'{self.__class__.__name__}.action must be an empty list or a list of action types')
+            raise ValueError(
+                f'{self.__class__.__name__}.action must be an empty list or a list of action types. It is a(n) {type(actions)} and has the value of {actions}.')
             # ^if it's not either throw an error
         self.__actions = actions
 
@@ -50,7 +52,8 @@ class Player(GameObject):
     @functional.setter  # do this for all the setters
     def functional(self, functional: bool) -> None:  # this enforces the type hinting
         if functional is None or not isinstance(functional, bool):  # if this statement is true throw an error
-            raise ValueError(f'{self.__class__.__name__}.functional must be a boolean')
+            raise ValueError(
+                f'{self.__class__.__name__}.functional must be a boolean. It is a(n) {type(functional)} and has the value of {functional}.')
         self.__functional = functional
 
     @property
@@ -60,7 +63,8 @@ class Player(GameObject):
     @team_name.setter
     def team_name(self, team_name: str) -> None:
         if team_name is not None and not isinstance(team_name, str):
-            raise ValueError(f'{self.__class__.__name__}.team_name must be a String or None')
+            raise ValueError(
+                f'{self.__class__.__name__}.team_name must be a String or None. It is a(n) {type(team_name)} and has the value of {team_name}.')
         self.__team_name = team_name
 
     @property
@@ -70,7 +74,8 @@ class Player(GameObject):
     @avatar.setter
     def avatar(self, avatar: Avatar) -> None:
         if avatar is not None and not isinstance(avatar, Avatar):
-            raise ValueError(f'{self.__class__.__name__}.avatar must be Avatar or None')
+            raise ValueError(
+                f'{self.__class__.__name__}.avatar must be Avatar or None. It is a(n) {type(avatar)} and has the value of {avatar}.')
         self.__avatar = avatar
 
     @property
@@ -80,7 +85,8 @@ class Player(GameObject):
     @object_type.setter
     def object_type(self, object_type: ObjectType) -> None:
         if object_type is None or not isinstance(object_type, ObjectType):
-            raise ValueError(f'{self.__class__.__name__}.object_type must be ObjectType')
+            raise ValueError(
+                f'{self.__class__.__name__}.object_type must be ObjectType. It is a(n) {type(object_type)} and has the value of {object_type}.')
         self.__object_type = object_type
 
     def to_json(self):
@@ -127,12 +133,12 @@ class Player(GameObject):
         # self.action = Action().from_json(data['action']) if data['action'] is not None else None
         # self.avatar = Avatar().from_json(data['avatar']) if data['avatar'] is not None else None
 
-# to String
+    # to String
     def __str__(self):
         p = f"""ID: {self.id}
             Team name: {self.team_name}
             Actions: 
             """
         # This concatenates every action from the list of actions to the string 
-        [p:= p + action for action in self.actions]
+        [p := p + action for action in self.actions]
         return p
