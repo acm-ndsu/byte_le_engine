@@ -28,9 +28,11 @@ class Occupiable(GameObject):
     @occupied_by.setter
     def occupied_by(self, occupied_by: GameObject | None) -> None:
         if occupied_by is not None and isinstance(occupied_by, Item):
-            raise ValueError(f'{self.__class__.__name__}.occupied_by cannot be an Item.')
+            raise ValueError(
+                f'{self.__class__.__name__}.occupied_by must be a GameObject. It is a(n) {type(occupied_by)} with the value of {occupied_by}')
         if occupied_by is not None and not isinstance(occupied_by, GameObject):
-            raise ValueError(f'{self.__class__.__name__}.occupied_by must be None or an instance of GameObject.')
+            raise ValueError(
+                f'{self.__class__.__name__}.occupied_by must be None or an instance of GameObject. It is a(n) {type(occupied_by)} with the value of {occupied_by}')
         self.__occupied_by = occupied_by
 
     def to_json(self) -> dict:
