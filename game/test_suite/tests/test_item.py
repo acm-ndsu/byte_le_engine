@@ -71,7 +71,7 @@ class TestItem(unittest.TestCase):
         with self.assertRaises(ValueError) as e:
             self.item.quantity = value
         self.assertEqual(str(e.exception), f'Item.quantity must be greater than or '
-                                           f'equal to 0. {value.__class__.__name__}.quantity '
+                                           f'equal to 0. {self.item.__class__.__name__}.quantity '
                                            f'has the value of {value}.')
 
     def test_set_quantity_fail_stack_size(self):
@@ -81,7 +81,7 @@ class TestItem(unittest.TestCase):
             self.item.quantity = value
             self.item.stack_size = value2
         self.assertEqual(str(e.exception), f'Item.quantity cannot be greater than '
-                             f'{value2.__class__.__name__}.stack_size. {value.__class__.__name__}.quantity has the value of {value}.')
+                             f'{self.item.__class__.__name__}.stack_size. {self.item.__class__.__name__}.quantity has the value of {value}.')
 
     def test_stack_size(self):
         self.item = Item(10, None, 10, 10)
@@ -101,7 +101,7 @@ class TestItem(unittest.TestCase):
             item: Item = Item(10, None, 10, 10)
             item.stack_size = value
         self.assertEqual(str(e.exception), f'Item.stack_size must be greater than or equal to the quantity.'
-                                           f' {value.__class__.__name__}.stack_size has the value of {value}.')
+                                           f' {self.item.__class__.__name__}.stack_size has the value of {value}.')
 
     def test_pick_up(self):
         # value, durability, quantity, stack size

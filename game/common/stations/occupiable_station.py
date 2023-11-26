@@ -43,5 +43,5 @@ class OccupiableStation(Occupiable, Station):
                 self.occupied_by: Station = Station().from_json(occupied_by)
             case _:
                 raise ValueError(f'{self.__class__.__name__}.occupied_by must be a GameObject.'
-                                 f' It is a(n) {occupied_by.__class__.__name__} with the value of {occupied_by}')
+                                 f' It is a(n) {self.occupied_by.__class__.__name__} with the value of {occupied_by}')
         return self
