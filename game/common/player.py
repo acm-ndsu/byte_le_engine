@@ -41,7 +41,7 @@ class Player(GameObject):
                 or (len(actions) > 0
                     and any(map(lambda action_type: not isinstance(action_type, ActionType), actions))):
             raise ValueError(
-                f'{self.__class__.__name__}.action must be an empty list or a list of action types. It is a(n) {type(actions)} and has the value of {actions}.')
+                f'{self.__class__.__name__}.action must be an empty list or a list of action types. It is a(n) {actions.__class__.__name__} and has the value of {actions}.')
             # ^if it's not either throw an error
         self.__actions = actions
 
@@ -53,7 +53,7 @@ class Player(GameObject):
     def functional(self, functional: bool) -> None:  # this enforces the type hinting
         if functional is None or not isinstance(functional, bool):  # if this statement is true throw an error
             raise ValueError(
-                f'{self.__class__.__name__}.functional must be a boolean. It is a(n) {type(functional)} and has the value of {functional}.')
+                f'{self.__class__.__name__}.functional must be a boolean. It is a(n) {functional.__class__.__name__} and has the value of {functional}.')
         self.__functional = functional
 
     @property
@@ -64,7 +64,7 @@ class Player(GameObject):
     def team_name(self, team_name: str) -> None:
         if team_name is not None and not isinstance(team_name, str):
             raise ValueError(
-                f'{self.__class__.__name__}.team_name must be a String or None. It is a(n) {type(team_name)} and has the value of {team_name}.')
+                f'{self.__class__.__name__}.team_name must be a String or None. It is a(n) {team_name.__class__.__name__} and has the value of {team_name}.')
         self.__team_name = team_name
 
     @property
@@ -75,7 +75,7 @@ class Player(GameObject):
     def avatar(self, avatar: Avatar) -> None:
         if avatar is not None and not isinstance(avatar, Avatar):
             raise ValueError(
-                f'{self.__class__.__name__}.avatar must be Avatar or None. It is a(n) {type(avatar)} and has the value of {avatar}.')
+                f'{self.__class__.__name__}.avatar must be Avatar or None. It is a(n) {avatar.__class__.__name__} and has the value of {avatar}.')
         self.__avatar = avatar
 
     @property
@@ -86,7 +86,7 @@ class Player(GameObject):
     def object_type(self, object_type: ObjectType) -> None:
         if object_type is None or not isinstance(object_type, ObjectType):
             raise ValueError(
-                f'{self.__class__.__name__}.object_type must be ObjectType. It is a(n) {type(object_type)} and has the value of {object_type}.')
+                f'{self.__class__.__name__}.object_type must be ObjectType. It is a(n) {object_type.__class__.__name__} and has the value of {object_type}.')
         self.__object_type = object_type
 
     def to_json(self):

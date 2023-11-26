@@ -35,14 +35,21 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(self.player.actions, self.actions)
 
     def test_actions_fail_none(self):
+        value: list = None
         with self.assertRaises(ValueError) as e:
-            self.player.actions = None
-        self.assertEqual(str(e.exception), 'Player.action must be an empty list or a list of action types')
+            self.player.actions = value
+        self.assertEqual(str(e.exception), f'Player.action must be an empty list or a list '
+                                           f'of action types.'
+                                           f' It is a(n) {value.__class__.__name__} and has the value of {value}.')
 
-    def test_actions_fail_not_action_type(self):
-        with self.assertRaises(ValueError) as e:
-            self.player.actions = 10
-        self.assertEqual(str(e.exception), 'Player.action must be an empty list or a list of action types')
+        def test_actions_fail_not_action_type(self):
+            value: int = 10
+            with self.assertRaises(ValueError) as e:
+                self.player.actions = value
+
+        self.assertEqual(str(e.exception), f'Player.action must be an empty list or a list '
+                                           f'of action types.'
+                                           f' It is a(n) {value.__class__.__name__} and has the value of {value}.')
 
     # test functional
     def test_functional_true(self):
@@ -58,9 +65,11 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(self.player.functional, self.functional)
 
     def test_functional_fail_int(self):
+        value: str = 'Strig'
         with self.assertRaises(ValueError) as e:
-            self.player.functional = "Strig"
-        self.assertEqual(str(e.exception), 'Player.functional must be a boolean')
+            self.player.functional = value
+        self.assertEqual(str(e.exception), f'Player.functional must be a boolean.'
+                                           f' It is a(n) {value.__class__.__name__} and has the value of {value}.')
 
     # team name
     def test_team_name(self):
@@ -76,9 +85,11 @@ class TestPlayer(unittest.TestCase):
 
     def test_team_name_fail_int(self):
         # if it is not a string it fails
+        value: int = 1
         with self.assertRaises(ValueError) as e:
-            self.player.team_name = 1
-        self.assertEqual(str(e.exception), 'Player.team_name must be a String or None')
+            self.player.team_name = value
+        self.assertEqual(str(e.exception), f'Player.team_name must be a String or None.'
+                                           f' It is a(n) {value.__class__.__name__} and has the value of {value}.')
 
     # test avatar
     def test_avatar(self):
@@ -91,9 +102,10 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(self.player.avatar, self.avatar)
 
     def test_avatar_fail_string(self):
+        value: int = 10
         with self.assertRaises(ValueError) as e:
-            self.player.avatar = 10
-        self.assertEqual(str(e.exception), 'Player.avatar must be Avatar or None')
+            self.player.avatar = value
+        self.assertEqual(str(e.exception), f'Player.avatar must be Avatar or None. It is a(n) {value.__class__.__name__} and has the value of {value}.')
 
     # test object type
     def test_object_type(self):
@@ -103,14 +115,16 @@ class TestPlayer(unittest.TestCase):
         self.assertEqual(self.player.object_type, self.object_type)
 
     def test_object_type_fail_none(self):
+        value: ObjectType = None
         with self.assertRaises(ValueError) as e:
-            self.player.object_type = None
-        self.assertEqual(str(e.exception), 'Player.object_type must be ObjectType')
+            self.player.object_type = value
+        self.assertEqual(str(e.exception), f'Player.object_type must be ObjectType. It is a(n) {value.__class__.__name__} and has the value of {value}.')
 
     def test_object_type_fail_int(self):
+        value: int = 10
         with self.assertRaises(ValueError) as e:
-            self.player.object_type = 10
-        self.assertEqual(str(e.exception), 'Player.object_type must be ObjectType')
+            self.player.object_type = value
+        self.assertEqual(str(e.exception), f'Player.object_type must be ObjectType. It is a(n) {value.__class__.__name__} and has the value of {value}.')
 
     # test to json
     def test_player_json(self):

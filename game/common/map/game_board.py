@@ -137,7 +137,8 @@ class GameBoard(GameObject):
             raise RuntimeError(f'{self.__class__.__name__} variables cannot be changed once generate_map is run.')
         if seed is not None and not isinstance(seed, int):
             raise ValueError(
-                f'{self.__class__.__name__}.seed must be an int. It is a(n) {type(seed)} with the value of {seed}.')
+                f'{self.__class__.__name__}.seed must be an int. '
+                f'It is a(n) {seed.__class__.__name__} with the value of {seed}.')
         self.__seed = seed
 
     @property
@@ -151,7 +152,8 @@ class GameBoard(GameObject):
                                      any([any(map(lambda g: not isinstance(g, Tile), tile_list))
                                           for tile_list in game_map])):
             raise ValueError(
-                f'{self.__class__.__name__}.game_map must be a list[list[Tile]]. It is a(n) {type(game_map)} with the value of {game_map}.')
+                f'{self.__class__.__name__}.game_map must be a list[list[Tile]]. '
+                f'It is a(n) {game_map.__class__.__name__} with the value of {game_map}.')
         self.__game_map = game_map
 
     @property
@@ -164,7 +166,8 @@ class GameBoard(GameObject):
             raise RuntimeError(f'{self.__class__.__name__} variables cannot be changed once generate_map is run.')
         if map_size is None or not isinstance(map_size, Vector):
             raise ValueError(
-                f'{self.__class__.__name__}.map_size must be a Vector. It is a(n) {type(map_size)} with the value of {map_size}.')
+                f'{self.__class__.__name__}.map_size must be a Vector. '
+                f'It is a(n) {map_size.__class__.__name__} with the value of {map_size}.')
         self.__map_size = map_size
 
     @property
@@ -177,7 +180,9 @@ class GameBoard(GameObject):
             raise RuntimeError(f'{self.__class__.__name__} variables cannot be changed once generate_map is run.')
         if locations is not None and not isinstance(locations, dict):
             raise ValueError(
-                f'Locations must be a dict. The key must be a tuple of Vector Objects, and the value a list of GameObject. It is a(n) {type(locations)} with the value of {locations}.')
+                f'Locations must be a dict. The key must be a tuple of Vector Objects, '
+                f'and the value a list of GameObject. '
+                f'It is a(n) {locations.__class__.__name__} with the value of {locations}.')
 
         self.__locations = locations
 
@@ -191,7 +196,8 @@ class GameBoard(GameObject):
             raise RuntimeError(f'{self.__class__.__name__} variables cannot be changed once generate_map is run.')
         if walled is None or not isinstance(walled, bool):
             raise ValueError(
-                f'{self.__class__.__name__}.walled must be a bool. It is a(n) {type(walled)} with the value of {walled}.')
+                f'{self.__class__.__name__}.walled must be a bool. '
+                f'It is a(n) {walled.__class__.__name__} with the value of {walled}.')
 
         self.__walled = walled
 
@@ -213,7 +219,8 @@ class GameBoard(GameObject):
         for k, v in self.locations.items():
             if len(k) == 0 or len(v) == 0:  # Key-Value lengths must be > 0 and equal
                 raise ValueError(
-                    f'A key-value pair from game_board.locations has a length of 0. The length of the keys is {len(k)} and the length of the values is {len(v)}.')
+                    f'A key-value pair from game_board.locations has a length of 0. '
+                    f'The length of the keys is {len(k)} and the length of the values is {len(v)}.')
 
             # random.sample returns a randomized list which is used in __help_populate()
             j = random.sample(k, k=len(k))
@@ -254,7 +261,8 @@ class GameBoard(GameObject):
 
             if temp_tile.occupied_by is not None:
                 raise ValueError(
-                    f'Last item on the given tile doesn\'t have the \'occupied_by\' attribute. It is a(n) {type(temp_tile.occupied_by)}.')
+                    f'Last item on the given tile doesn\'t have the \'occupied_by\' attribute. '
+                    f'It is a(n) {temp_tile.occupied_by.__class__.__name__} with the value of {temp_tile.occupied_by}.')
 
             temp_tile.occupied_by = game_object
 
@@ -269,7 +277,9 @@ class GameBoard(GameObject):
 
         for game_object in remaining_objects:
             if not hasattr(temp_tile, 'occupied_by') or temp_tile.occupied_by is not None:
-                raise ValueError(f'Last item on the given tile doesn\'t have the \'occupied_by\' attribute. It is a(n) {type(temp_tile.occupied_by)}.')
+                raise ValueError(
+                    f'Last item on the given tile doesn\'t have the \'occupied_by\' attribute.'
+                    f' It is a(n) {temp_tile.occupied_by.__class__.__name__} with the value of {temp_tile.occupied_by}.')
             temp_tile.occupied_by = game_object
             temp_tile = temp_tile.occupied_by
 
@@ -328,7 +338,8 @@ class GameBoard(GameObject):
                 return Avatar().from_json(data)
             # If adding more ObjectTypes that can be placed on the game_board, specify here
             case _:
-                raise ValueError(f'The object type of the object is not handled properly. The object type passed in is {temp}.')
+                raise ValueError(
+                    f'The object type of the object is not handled properly. The object type passed in is {temp}.')
 
     def from_json(self, data: dict) -> Self:
         super().from_json(data)
