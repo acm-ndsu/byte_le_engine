@@ -24,24 +24,28 @@ class TestAvatarInventory(unittest.TestCase):
 
     # fails if inventory is not a list
     def test_avatar_set_inventory_fail_1(self):
+        value: str = 'Fail'
         with self.assertRaises(ValueError) as e:
-            self.avatar.inventory = 'Fail'
-        self.assertEqual(str(e.exception), 'Avatar.inventory must be a list of Items.')
+            self.avatar.inventory = value
+        self.assertEqual(str(e.exception), f'Avatar.inventory must be a list of Items. It is a(n) {value.__class__.__name__} and has the value of {value}')
 
     # fails if inventory size is greater than the max_inventory_size
     def test_avatar_set_inventory_fail_2(self):
+        value: list = [Item(1,1), Item(4,2)]
         with self.assertRaises(ValueError) as e:
-            self.avatar.inventory = [Item(1, 1), Item(4, 2)]
-        self.assertEqual(str(e.exception), 'Avatar.inventory size must be less than or equal to max_inventory_size')
+            self.avatar.inventory = value
+        self.assertEqual(str(e.exception), 'Avatar.inventory size must be less than or equal to '
+                             f'max_inventory_size. It has the value of {len(value)}')
 
     def test_avatar_set_max_inventory_size(self):
         self.avatar.max_inventory_size = 10
         self.assertEqual(str(self.avatar.max_inventory_size), str(10))
 
     def test_avatar_set_max_inventory_size_fail(self):
+        value: str = 'Fail'
         with self.assertRaises(ValueError) as e:
-            self.avatar.max_inventory_size = 'Fail'
-        self.assertEqual(str(e.exception), 'Avatar.max_inventory_size must be an int.')
+            self.avatar.max_inventory_size = value
+        self.assertEqual(str(e.exception), f'Avatar.max_inventory_size must be an int. It is a(n) {value.__class__.__name__} and has the value of {value}')
 
     # Tests picking up an item
     def test_avatar_pick_up(self):
@@ -114,9 +118,11 @@ class TestAvatarInventory(unittest.TestCase):
         self.avatar: Avatar = Avatar(None, 3)
         self.avatar.inventory = [Item(quantity=5, stack_size=5), Item(quantity=7, stack_size=7),
                                  Item(quantity=10, stack_size=10)]
+        value: str = 'wow'
         with self.assertRaises(ValueError) as e:
-            taken = self.avatar.take('')
-        self.assertEqual(str(e.exception), 'str is not of type Item.')
+            taken = self.avatar.take(value)
+        self.assertEqual(str(e.exception), f'str.item must be an item.'
+                                           f' It is a(n) {value.__class__.__name__} with the value of {value}.')
 
     # Tests picking up an item and failing
     def test_avatar_pick_up_full_inventory(self):

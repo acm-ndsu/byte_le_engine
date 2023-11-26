@@ -23,6 +23,7 @@ class TestGameBoard(unittest.TestCase):
 
         This class tests the different methods in the Avatar class.
     """
+
     def setUp(self) -> None:
         self.item: Item = Item(10, None)
         self.wall: Wall = Wall()
@@ -41,9 +42,12 @@ class TestGameBoard(unittest.TestCase):
         self.assertEqual(self.game_board.seed, 2)
 
     def test_seed_fail(self):
+        value: str = 'False'
         with self.assertRaises(ValueError) as e:
-            self.game_board.seed = "False"
-        self.assertEqual(str(e.exception), 'GameBoard.seed must be an integer or None.')
+            self.game_board.seed = value
+        self.assertEqual(str(e.exception),
+                         f'GameBoard.seed must be an int. '
+                         f'It is a(n) {value.__class__.__name__} with the value of {value}.')
 
     # test map_size
     def test_map_size(self):
@@ -51,9 +55,12 @@ class TestGameBoard(unittest.TestCase):
         self.assertEqual(str(self.game_board.map_size), str(Vector(12, 12)))
 
     def test_map_size_fail(self):
+        value: str = 'wow'
         with self.assertRaises(ValueError) as e:
-            self.game_board.map_size = "wow"
-        self.assertEqual(str(e.exception), 'GameBoard.map_size must be a Vector.')
+            self.game_board.map_size = value
+        self.assertEqual(str(e.exception),
+                         f'GameBoard.map_size must be a Vector.'
+                         f' It is a(n) {value.__class__.__name__} with the value of {value}.')
 
     # test locations
     def test_locations(self):
@@ -67,10 +74,13 @@ class TestGameBoard(unittest.TestCase):
         self.assertEqual(str(self.game_board.locations), str(self.locations))
 
     def test_locations_fail_type(self):
+        value: str = 'wow'
         with self.assertRaises(ValueError) as e:
-            self.game_board.locations = "wow"
-        self.assertEqual(str(e.exception), 'Locations must be a dict. The key must be a tuple of Vector Objects, '
-                                           'and the value a list of GameObject.')
+            self.game_board.locations = value
+        self.assertEqual(str(e.exception),
+                         f'Locations must be a dict. The key must be a tuple of Vector Objects,'
+                         f' and the value a list of GameObject. '
+                         f'It is a(n) {value.__class__.__name__} with the value of {value}.')
 
     # test walled
     def test_walled(self):
@@ -78,9 +88,12 @@ class TestGameBoard(unittest.TestCase):
         self.assertEqual(self.game_board.walled, True)
 
     def test_walled_fail(self):
+        value: str = 'wow'
         with self.assertRaises(ValueError) as e:
-            self.game_board.walled = "wow"
-        self.assertEqual(str(e.exception), 'GameBoard.walled must be a bool.')
+            self.game_board.walled = value
+        self.assertEqual(str(e.exception),
+                         f'GameBoard.walled must be a bool.'
+                         f' It is a(n) {value.__class__.__name__} with the value of {value}.')
 
     # test json method
     def test_game_board_json(self):

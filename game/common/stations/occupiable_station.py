@@ -42,5 +42,6 @@ class OccupiableStation(Occupiable, Station):
             case ObjectType.STATION:
                 self.occupied_by: Station = Station().from_json(occupied_by)
             case _:
-                raise ValueError(f'The object type of the object is not handled properly. The object type passed in is {occupied_by}.')
+                raise ValueError(f'{self.__class__.__name__}.occupied_by must be a GameObject.'
+                                 f' It is a(n) {occupied_by.__class__.__name__} with the value of {occupied_by}')
         return self

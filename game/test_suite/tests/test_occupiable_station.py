@@ -48,9 +48,12 @@ class TestOccupiableStation(unittest.TestCase):
 
     # test cannot add item to occupied_by
     def test_fail_item_occ(self):
+        value: Item = self.item
         with self.assertRaises(ValueError) as e:
-            self.occupiable_station.occupied_by = self.item
-        self.assertEqual(str(e.exception), 'OccupiableStation.occupied_by cannot be an Item.')
+            self.occupiable_station.occupied_by = value
+        self.assertEqual(str(e.exception),
+                         f'OccupiableStation.occupied_by must be a GameObject.'
+                         f' It is a(n) {value.__class__.__name__} with the value of {value}.')
 
     # test json method
     def test_occ_json(self):

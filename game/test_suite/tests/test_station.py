@@ -38,9 +38,10 @@ class TestStation(unittest.TestCase):
 
     # test adding something not an item
     def test_item_occ_fail(self):
+        value: str = 'wow'
         with self.assertRaises(ValueError) as e:
-            self.station.held_item = 'wow'
-        self.assertEqual(str(e.exception), 'Station.held_item must be an Item or None, not wow.')
+            self.station.held_item = value
+        self.assertEqual(str(e.exception), f'Station.held_item must be an Item or None, not {value}.')
 
     # test base take action method works
     def test_take_action(self):

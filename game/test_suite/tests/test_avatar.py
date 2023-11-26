@@ -23,8 +23,10 @@ class TestAvatar(unittest.TestCase):
 
     def test_avatar_set_item_fail(self):
         with self.assertRaises(ValueError) as e:
-            self.avatar.held_item = 3
-        self.assertEqual(str(e.exception), 'Avatar.held_item must be an Item or None.')
+            self.avatar.held_item = value
+        self.assertEqual(str(e.exception), f'Avatar.held_item must be an Item or None. It is a(n) '
+                                           f'{value.__class__.__name__} and has the value of '
+                                           f'{value}')
 
     # test set score
     def test_avatar_set_score(self):
@@ -32,9 +34,11 @@ class TestAvatar(unittest.TestCase):
         self.assertEqual(self.avatar.score, 10)
 
     def test_avatar_set_score_fail(self):
+        value: str = 'wow'
         with self.assertRaises(ValueError) as e:
-            self.avatar.score = 'wow'
-        self.assertEqual(str(e.exception), 'Avatar.score must be an int.')
+            self.avatar.score = value
+        self.assertEqual(str(e.exception), f'Avatar.score must be an int. It is a(n) '
+                                           f'{value.__class__.__name__} and has the value of {value}')
 
     # test set position
     def test_avatar_set_position(self):
@@ -47,8 +51,9 @@ class TestAvatar(unittest.TestCase):
 
     def test_avatar_set_position_fail(self):
         with self.assertRaises(ValueError) as e:
-            self.avatar.position = 10
-        self.assertEqual(str(e.exception), 'Avatar.position must be a Vector or None.')
+            self.avatar.position = value
+        self.assertEqual(str(e.exception), f'Avatar.position must be a Vector or None. '
+                                           f'It is a(n) {value.__class__.__name__} and has the value of {value}')
 
     # test json method
     def test_avatar_json_with_none_item(self):

@@ -26,15 +26,20 @@ class TestItem(unittest.TestCase):
         self.assertEqual(self.item.durability, None)
 
     def test_set_durability_fail(self):
+        value: str = 'fail'
         with self.assertRaises(ValueError) as e:
-            self.item.durability = 'fail'
-        self.assertEqual(str(e.exception), 'Item.durability must be an int or None.')
+            self.item.durability = value
+        self.assertEqual(str(e.exception), f'Item.durability must be an int. It is a(n) {value.__class__.__name__} with the value of {value}.')
 
     def test_set_durability_stack_size_fail(self):
+        value: list = Item(10,None,10,10)
+        value2: int = 10
         with self.assertRaises(ValueError) as e:
-            self.item = Item(10, None, 10, 10)
-            self.item.durability = 19
-        self.assertEqual(str(e.exception), 'Item.durability must be set to None if stack_size is not equal to 1.')
+            self.item = value
+            self.item.durability = value2
+        self.assertEqual(str(e.exception), f'Item.durability must be set to None if stack_size is not equal to 1.'
+                                           f' {value.__class__.__name__}.'
+                                           f'durability has the value of {value2}.')
 
     # test set value
     def test_set_value(self):
@@ -42,9 +47,11 @@ class TestItem(unittest.TestCase):
         self.assertEqual(self.item.value, 10)
 
     def test_set_value_fail(self):
+        value: str = 'fail'
         with self.assertRaises(ValueError) as e:
-            self.item.value = 'fail'
-        self.assertEqual(str(e.exception), 'Item.value must be an int.')
+            self.item.value = value
+        self.assertEqual(str(e.exception), f'Item.value must be an int.'
+                                           f' It is a(n) {value.__class__.__name__} with the value of {value}.')
 
     # test set quantity
     def test_set_quantity(self):
@@ -53,36 +60,48 @@ class TestItem(unittest.TestCase):
         self.assertEqual(self.item.quantity, 5)
 
     def test_set_quantity_fail(self):
+        value: str = 'fail'
         with self.assertRaises(ValueError) as e:
-            self.item.quantity = 'fail'
-        self.assertEqual(str(e.exception), 'Item.quantity must be an int.')
+            self.item.quantity = value
+        self.assertEqual(str(e.exception), f'Item.quantity must be an int.'
+                                           f' It is a(n) {value.__class__.__name__} with the value of {value}.')
 
     def test_set_quantity_fail_greater_than_0(self):
+        value: Item = -1
         with self.assertRaises(ValueError) as e:
-            self.item.quantity = -1
-        self.assertEqual(str(e.exception), 'Item.quantity must be greater than or equal to 0.')
+            self.item.quantity = value
+        self.assertEqual(str(e.exception), f'Item.quantity must be greater than or '
+                                           f'equal to 0. {value.__class__.__name__}.quantity '
+                                           f'has the value of {value}.')
 
     def test_set_quantity_fail_stack_size(self):
+        value: Item = 10
+        value2: Item = 1
         with self.assertRaises(ValueError) as e:
-            self.item.quantity = 10
-            self.item.stack_size = 1
-        self.assertEqual(str(e.exception), 'Item.quantity cannot be greater than Item.stack_size')
+            self.item.quantity = value
+            self.item.stack_size = value2
+        self.assertEqual(str(e.exception), f'Item.quantity cannot be greater than '
+                             f'{value2.__class__.__name__}.stack_size. {value.__class__.__name__}.quantity has the value of {value}.')
 
     def test_stack_size(self):
         self.item = Item(10, None, 10, 10)
         self.assertEqual(self.item.quantity, 10)
 
     def test_stack_size_fail(self):
+        value: str = 'fail'
         with self.assertRaises(ValueError) as e:
-            self.item.stack_size = 'fail'
-        self.assertEqual(str(e.exception), 'Item.stack_size must be an int.')
+            self.item.stack_size = value
+        self.assertEqual(str(e.exception), f'Item.stack_size must be an int.'
+                                           f' It is a(n) {value.__class__.__name__} with the value of {value}.')
 
     def test_stack_size_fail_quantity(self):
         # value, durability, quantity, stack size
+        value: Item = 5
         with self.assertRaises(ValueError) as e:
             item: Item = Item(10, None, 10, 10)
-            item.stack_size = 5
-        self.assertEqual(str(e.exception), 'Item.stack_size must be greater than or equal to the quantity.')
+            item.stack_size = value
+        self.assertEqual(str(e.exception), f'Item.stack_size must be greater than or equal to the quantity.'
+                                           f' {value.__class__.__name__}.stack_size has the value of {value}.')
 
     def test_pick_up(self):
         # value, durability, quantity, stack size
