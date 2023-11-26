@@ -22,6 +22,7 @@ class TestAvatar(unittest.TestCase):
         self.assertEqual(self.avatar.held_item, self.item)
 
     def test_avatar_set_item_fail(self):
+        value: int = 3
         with self.assertRaises(ValueError) as e:
             self.avatar.held_item = value
         self.assertEqual(str(e.exception), f'Avatar.held_item must be an Item or None. It is a(n) '
@@ -50,6 +51,7 @@ class TestAvatar(unittest.TestCase):
         self.assertEqual(self.avatar.position, None)
 
     def test_avatar_set_position_fail(self):
+        value: int = 10
         with self.assertRaises(ValueError) as e:
             self.avatar.position = value
         self.assertEqual(str(e.exception), f'Avatar.position must be a Vector or None. '
